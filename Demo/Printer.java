@@ -17,7 +17,7 @@ package Demo;
 
 public interface Printer extends com.zeroc.Ice.Object
 {
-    void printString(String s, com.zeroc.Ice.Current current);
+    long printAnswer(long l, String hostname, com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -50,15 +50,20 @@ public interface Printer extends com.zeroc.Ice.Object
      * @param current -
      * @return -
     **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_printString(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_printAnswer(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        String iceP_s;
-        iceP_s = istr.readString();
+        long iceP_l;
+        String iceP_hostname;
+        iceP_l = istr.readLong();
+        iceP_hostname = istr.readString();
         inS.endReadParams();
-        obj.printString(iceP_s, current);
-        return inS.setResult(inS.writeEmptyParams());
+        long ret = obj.printAnswer(iceP_l, iceP_hostname, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeLong(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /** @hidden */
@@ -68,7 +73,7 @@ public interface Printer extends com.zeroc.Ice.Object
         "ice_ids",
         "ice_isA",
         "ice_ping",
-        "printString"
+        "printAnswer"
     };
 
     /** @hidden */
@@ -102,7 +107,7 @@ public interface Printer extends com.zeroc.Ice.Object
             }
             case 4:
             {
-                return _iceD_printString(this, in, current);
+                return _iceD_printAnswer(this, in, current);
             }
         }
 

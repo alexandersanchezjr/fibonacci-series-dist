@@ -1,11 +1,11 @@
 public class PrinterI implements Demo.Printer
 {
-    public void printAnswer(long l, String hostname, com.zeroc.Ice.Current current)
+    public long printAnswer(long l, String hostname, com.zeroc.Ice.Current current)
     {
         
-        long result = fib(l);
-
+        String result = fibonacciSerieNumbers(l);
         System.out.println(hostname + ": " + result);
+        return fib(l);
     }
 
     private long fib (long n) {
@@ -14,5 +14,13 @@ public class PrinterI implements Demo.Printer
         } else {
             return fib(n - 1) + fib(n - 2);
         }
+    }
+
+    private String fibonacciSerieNumbers (long n){
+        String serie = "";
+        for (int i = 0; i < n; i++) {
+            serie += fib(i) + " ";
+        }
+        return serie;
     }
 }

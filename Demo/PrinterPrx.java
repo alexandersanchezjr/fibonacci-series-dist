@@ -17,39 +17,45 @@ package Demo;
 
 public interface PrinterPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default void printString(String s)
+    default long printAnswer(long l, String hostname)
     {
-        printString(s, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return printAnswer(l, hostname, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void printString(String s, java.util.Map<String, String> context)
+    default long printAnswer(long l, String hostname, java.util.Map<String, String> context)
     {
-        _iceI_printStringAsync(s, context, true).waitForResponse();
+        return _iceI_printAnswerAsync(l, hostname, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<Void> printStringAsync(String s)
+    default java.util.concurrent.CompletableFuture<java.lang.Long> printAnswerAsync(long l, String hostname)
     {
-        return _iceI_printStringAsync(s, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+        return _iceI_printAnswerAsync(l, hostname, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> printStringAsync(String s, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Long> printAnswerAsync(long l, String hostname, java.util.Map<String, String> context)
     {
-        return _iceI_printStringAsync(s, context, false);
+        return _iceI_printAnswerAsync(l, hostname, context, false);
     }
 
     /**
      * @hidden
-     * @param iceP_s -
+     * @param iceP_l -
+     * @param iceP_hostname -
      * @param context -
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_printStringAsync(String iceP_s, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Long> _iceI_printAnswerAsync(long iceP_l, String iceP_hostname, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "printString", null, sync, null);
-        f.invoke(false, context, null, ostr -> {
-                     ostr.writeString(iceP_s);
-                 }, null);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Long> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "printAnswer", null, sync, null);
+        f.invoke(true, context, null, ostr -> {
+                     ostr.writeLong(iceP_l);
+                     ostr.writeString(iceP_hostname);
+                 }, istr -> {
+                     long ret;
+                     ret = istr.readLong();
+                     return ret;
+                 });
         return f;
     }
 

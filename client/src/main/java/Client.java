@@ -24,7 +24,7 @@ public class Client
             boolean exit = false;
 
             do {
-                System.out.print("Inserte el numero de la serie fibonacci que quiere calcular: ");
+                System.out.print("Inserte el numero de la serie fibonacci que quiere calcular: " + hostname + ":");
                 String response = reader.readLine();
                 if (response.equalsIgnoreCase("exit")) {
                     exit = true;
@@ -33,8 +33,8 @@ public class Client
                         number = Integer.parseInt(response);
                         if (number < 0)
                             System.out.println("Respuesta: " + 0);
-                        else 
-                            printer.printAnswer(number, hostname);
+                        else
+                            System.out.println(printer.printAnswer(number, hostname));
                     } catch (NumberFormatException e) {
                         System.out.println("El valor ingresado no es un numero");
                     }

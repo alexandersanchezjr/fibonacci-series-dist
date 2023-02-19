@@ -2,6 +2,6 @@ module Demo
 {
     interface Printer
     {
-        void printAnswer(long l, string hostname);
+        long printAnswer(long l, string hostname);
     }
 }
