@@ -1,7 +1,12 @@
 module Demo
 {
-    interface Printer
+    interface CallbackReceiver
     {
-        long printAnswer(long l, string hostname);
+        void callback(string message);
+    } 
+
+    interface CallbackSender
+    {
+        void initiateCallback(CallbackReceiver* proxy, string message);
     }
 }

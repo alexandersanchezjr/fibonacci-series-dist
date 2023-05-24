@@ -16,7 +16,7 @@
 package Demo;
 
 /** @hidden */
-public class _PrinterPrxI extends com.zeroc.Ice._ObjectPrxI implements PrinterPrx
+public class _CallbackSenderPrxI extends com.zeroc.Ice._ObjectPrxI implements CallbackSenderPrx
 {
     /** @hidden */
     public static final long serialVersionUID = 0L;
