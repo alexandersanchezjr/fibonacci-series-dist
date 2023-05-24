@@ -7,18 +7,20 @@ import com.zeroc.Ice.Util;
 
 import Demo.CallbackReceiverPrx;
 import Demo.CallbackSenderPrx;
+import java.math.BigInteger;
 
 public class Client {
     static com.zeroc.Ice.Communicator communicator;
 
     public static void main(String[] args) {
+        BigInteger inputNumber = new BigInteger(args[0]);
         java.util.List<String> extraArgs = new java.util.ArrayList<>();
         communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs);
         Demo.CallbackSenderPrx server = serverConfiguration();
         Demo.CallbackReceiverPrx client = clientConfiguration();
         if (server == null || client == null)
             throw new Error("Invalid proxy");
-        runProgram(server, client);
+        runProgram(server, client, inputNumber);
         communicator.shutdown();
         communicator.destroy();
     }
@@ -28,17 +30,19 @@ public class Client {
      * @param server
      * @param client
      */
-    public static void runProgram(CallbackSenderPrx server, CallbackReceiverPrx client) {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String hostname = communicator.getProperties().getProperty("Ice.Default.Host");
+    public static void runProgram(CallbackSenderPrx server, CallbackReceiverPrx client, /* String message, */ BigInteger inputNumber) {
+        // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-            System.out.print("Welcome please type a number 🫰: ");
-            String message = br.readLine();
+            String hostname = java.net.InetAddress.getLocalHost().getHostName();;
+            System.out.println(hostname + " - Welcome please type a number 🫰: " + inputNumber);
+            server.initiateCallback(client, hostname + ":" + inputNumber);
+            /* String message = br.readLine();
             while (!message.equalsIgnoreCase("exit")) {
-                server.initiateCallback(client, hostname + ":" + message);
+                server.initiateCallback(client, hostname + ":" + inputNumber);
                 System.out.print("Enter another number to calculate ⭐️: ");
                 message =  br.readLine();
             }
+            */
         } catch (Exception e) {
             System.out.println(e);
         }
