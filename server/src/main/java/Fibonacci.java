@@ -9,6 +9,6 @@ public class Fibonacci {
     }
 
     public static long fibonacciValue(List<Long> seq) {
-        return seq.subList(seq.size() - 2, seq.size()).stream().mapToLong(Long::longValue).sum();
+        return seq.get(seq.size() - 1);
     }
 }

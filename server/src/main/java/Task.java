@@ -30,7 +30,7 @@ public class Task implements Runnable {
             listClient();
         else if (message.startsWith("to"))
             sendTo(host, message);
-        else if (message.startsWith("bc"))
+        else if (message.startsWith("BC"))
             broadcast(host, message);
         else if (message.startsWith("exit"))
             exit(host);
@@ -59,8 +59,7 @@ public class Task implements Runnable {
     @SneakyThrows
     private void broadcast(String host, String message) {
         sem.acquire();
-        handler.getClients().keySet().stream().filter(h -> !host.equals(h))
-                .forEach(h -> handler.getClients().get(h).callback(String.format("%s:%s", host, message)));
+        handler.getClients().keySet().stream().forEach(h -> handler.getClients().get(h).callback(String.format("%s:%s", host, message)));
         sem.release();
     }
 
@@ -71,8 +70,8 @@ public class Task implements Runnable {
     @SneakyThrows
     public String validationLayer(String host, String message) {
         String response = 0 + "";
-        if (message.matches("-?\\d+")) {
-            System.out.println(message);
+        if (!message.matches("[0-9]+")) {
+            System.out.println(String.format("%s:%s", host, message));
         } else {
             long number = Long.parseLong(message);
             if (number > 0) {
