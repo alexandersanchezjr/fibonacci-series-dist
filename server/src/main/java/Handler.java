@@ -15,9 +15,9 @@ public class Handler {
     private Semaphore sem;
 
     private Handler() {
-        this.pool = java.util.concurrent.Executors.newFixedThreadPool(MAX_THREADS);
-        this.clients = new HashMap<>();
-        this.sem = new Semaphore(1);
+        pool = java.util.concurrent.Executors.newFixedThreadPool(MAX_THREADS);
+        clients = new HashMap<>();
+        sem = new Semaphore(1);
     }
 
     public static Handler getInstance() {
@@ -49,7 +49,7 @@ public class Handler {
         sem.acquire();
         if (clients.containsKey(host)) {
             clients.remove(host);
-            System.out.println(host + " left. \n"); // Debug Porpuses
+            System.out.println(String.format("%s was removed.", host));
         }
         sem.release();
     }

@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.concurrent.Semaphore;
-
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import Demo.CallbackReceiverPrx;
@@ -57,12 +56,16 @@ public class Task implements Runnable {
         sem.release();
     }
 
+    @SneakyThrows
     private void broadcast(String host, String message) {
-
+        sem.acquire();
+        handler.getClients().keySet().stream().filter(h -> !host.equals(h))
+                .forEach(h -> handler.getClients().get(h).callback(String.format("%s:%s", host, message)));
+        sem.release();
     }
 
     private void exit(String host) {
-
+        handler.removeClient(host);
     }
 
     @SneakyThrows
